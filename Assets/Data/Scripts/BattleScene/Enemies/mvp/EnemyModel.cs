@@ -7,7 +7,7 @@ namespace Levels.Enemies
 {
     public class EnemyModel
     {
-        private MapCell[] _cells;
+        private Vector3[] _cells;
         
         private float _currentHealth;
         private int _maxHealth;
@@ -40,7 +40,7 @@ namespace Levels.Enemies
         public System.Action<EnemyModel> OnDamageMainTower;        
         public System.Action<float> OnUnitDamaged;        
 
-        public void Init(EnemyData config, MapCell[] way)
+        public void Init(EnemyData config, Vector3[] way)
         {
             _currentHealth = config.Health;
             _maxHealth = config.Health;
@@ -63,7 +63,7 @@ namespace Levels.Enemies
 
         public Vector3 GetCurrentCell()
         {
-            return _cells[_cellIndex].WorldPosition;
+            return _cells[_cellIndex];
         }
 
         public void NextCell()

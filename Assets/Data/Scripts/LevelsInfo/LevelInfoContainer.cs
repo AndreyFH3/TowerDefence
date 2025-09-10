@@ -14,7 +14,5 @@ namespace Levels.Info
         {
             return _levelsInfo.Find(el => el.LevelId == id);
         }
-
-
     }
 }

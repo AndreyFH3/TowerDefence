@@ -14,8 +14,146 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelsInfo:
   - _levelId: LEVEL_1
-    _sprite: {fileID: 0}
+    _sprite: {fileID: 21300000, guid: 548b43b5ed8f5d04db6cc15c19ce5125, type: 3}
+    _waves:
+    - _enemies:
+      - ENEMY_WATER
+      - ENEMY_BASE
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_BASE
+    - _enemies:
+      - ENEMY_WATER
+      - ENEMY_BASE
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_BASE
+    - _enemies:
+      - ENEMY_WATER
+      - ENEMY_BASE
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_BASE
+    - _enemies:
+      - ENEMY_WATER
+      - ENEMY_BASE
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_BASE
+    - _enemies:
+      - ENEMY_WATER
+      - ENEMY_BASE
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_BASE
+    _points:
+    - {x: -6.06429, y: 6.63361, z: 0}
+    - {x: -6.06429, y: -1.54639, z: 0}
+    - {x: -1.5542899, y: -1.54639, z: 0}
+    - {x: -1.5542899, y: 3.44361, z: 0}
+    - {x: 3.85571, y: 3.44361, z: 0}
+    - {x: 3.85571, y: -1.6363901, z: 0}
+    - {x: 6.71571, y: -1.6363901, z: 0}
+    - {x: 6.71571, y: -1.6363901, z: 0}
   - _levelId: LEVEL_2
-    _sprite: {fileID: 0}
+    _sprite: {fileID: 21300000, guid: 819c06c75d56b644eb0d861767fc45ad, type: 3}
+    _waves:
+    - _enemies:
+      - ENEMY_BASE
+      - ENEMY_WATER
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_BASE
+    - _enemies:
+      - ENEMY_BASE
+      - ENEMY_WATER
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_BASE
+    - _enemies:
+      - ENEMY_BASE
+      - ENEMY_WATER
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_BASE
+    - _enemies:
+      - ENEMY_BASE
+      - ENEMY_WATER
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_BASE
+    - _enemies:
+      - ENEMY_BASE
+      - ENEMY_WATER
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_BASE
+    - _enemies:
+      - ENEMY_BASE
+      - ENEMY_WATER
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_BASE
+    _points:
+    - {x: -6.06429, y: 6.63361, z: 0}
+    - {x: -6.06429, y: -1.54639, z: 0}
+    - {x: -1.5542899, y: -1.54639, z: 0}
+    - {x: -1.5542899, y: 3.44361, z: 0}
+    - {x: 3.85571, y: 3.44361, z: 0}
+    - {x: 3.85571, y: -1.6363901, z: 0}
+    - {x: 6.71571, y: -1.6363901, z: 0}
+    - {x: 6.71571, y: -1.6363901, z: 0}
   - _levelId: LEVEL_3
-    _sprite: {fileID: 0}
+    _sprite: {fileID: 21300000, guid: f62ec9542d0389a4ab272b3b31e4083f, type: 3}
+    _waves:
+    - _enemies:
+      - ENEMY_BASE
+      - ENEMY_BASE
+      - ENEMY_BASE
+      - ENEMY_BASE
+      - ENEMY_BASE
+    - _enemies:
+      - ENEMY_WATER
+      - ENEMY_WATER
+      - ENEMY_WATER
+      - ENEMY_WATER
+      - ENEMY_WATER
+    - _enemies:
+      - ENEMY_FIRE
+      - ENEMY_FIRE
+      - ENEMY_FIRE
+      - ENEMY_FIRE
+      - ENEMY_FIRE
+    - _enemies:
+      - ENEMY_FIRE
+      - ENEMY_FIRE
+      - ENEMY_FIRE
+      - ENEMY_FIRE
+      - ENEMY_FIRE
+    - _enemies:
+      - ENEMY_WATER
+      - ENEMY_FIRE
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_WATER
+    - _enemies:
+      - ENEMY_WATER
+      - ENEMY_FIRE
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_WATER
+    - _enemies:
+      - ENEMY_WATER
+      - ENEMY_FIRE
+      - ENEMY_BASE
+      - ENEMY_FIRE
+      - ENEMY_WATER
+    _points:
+    - {x: -6.06429, y: 6.63361, z: 0}
+    - {x: -6.06429, y: -1.54639, z: 0}
+    - {x: -1.5542899, y: -1.54639, z: 0}
+    - {x: -1.5542899, y: 3.44361, z: 0}
+    - {x: 3.85571, y: 3.44361, z: 0}
+    - {x: 3.85571, y: -1.6363901, z: 0}
+    - {x: 6.71571, y: -1.6363901, z: 0}
+    - {x: 6.71571, y: -1.6363901, z: 0}

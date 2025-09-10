@@ -15,7 +15,8 @@ namespace Levels.Managers
     {
         private List<EnemyModel> _enemies = new();
         private List<TowerModel> _towers = new();
-        private List<MapCell> _cells = new();
+        private List<Vector3> _points;
+        private List<Wave> _waves;
 
         private EnemyFabric _enemyFabric;
         private TowerFabric _towerFabric;
@@ -30,19 +31,18 @@ namespace Levels.Managers
         public System.Action OnWaveFinished;
         public System.Action<float> OnMainTowerDamaged;
         
+        public Vector3[] Points => _points.ToArray();
+        public Wave[] Waves => _waves.ToArray();
 
         public System.Action<EnemyModel> OnEnemyDie;
-
-        public MapCell[] Cells => _cells.ToArray();
-        private LevelInfo _levelInfo;
 
         private float UnitSpawnDelay => 1.5f;
 
         private CancellationTokenSource _cts;
 
-        public void Init(LevelInfoContainer levelsContainer, LevelSceneInfo levelSceneInfo, EnemyFabric enemyFabric, TowerFabric towerFabric, MainTowerModel mainTower)
+
+        public void Init(EnemyFabric enemyFabric, TowerFabric towerFabric, MainTowerModel mainTower)
         {
-            _levelInfo = levelsContainer.GetLevelInfo(levelSceneInfo.LevelId);
             _enemyFabric = enemyFabric;
             _towerFabric = towerFabric;
             _mainTower = mainTower;
@@ -52,7 +52,17 @@ namespace Levels.Managers
             _cts = new();
         }
 
-        public (int, int) GetWavesInfo() => (_currentWave + 1, _levelInfo.Waves.Length);
+        public void SetWaves(List<Wave> waves)
+        {
+            _waves = waves;
+        }
+
+        public void SetPoints(List<Vector3> points)
+        {
+            _points = points;
+        }
+
+        public (int, int) GetWavesInfo() => (_currentWave + 1, Waves.Length);
 
         private void MainTowerDamaged(float value) => OnMainTowerDamaged?.Invoke(value);
 
@@ -61,7 +71,7 @@ namespace Levels.Managers
 
         public void StartWave()
         {
-            if (_enemies.Count > 0 && _currentWave >= _levelInfo.Waves.Length)
+            if (_enemies.Count > 0 && _currentWave <= Waves.Length)
                 return;
             CreateWave(_cts.Token).Forget();
         }
@@ -74,7 +84,7 @@ namespace Levels.Managers
             return enemy;
         }
 
-        private void AddTower(Vector3 position, TowerData data, BulletType bulletType)
+        private void AddTower(Vector3 position, TowerData data)
         {
             TowerModel tower = _towerFabric.Create(position, data, this);
             _towers.Add(tower);    
@@ -84,7 +94,7 @@ namespace Levels.Managers
         {
             try
             {
-                foreach (var enemyData in _levelInfo.Waves[_currentWave])
+                foreach (var enemyData in Waves[_currentWave].Enemies)
                 {
                     SpawnEnemy(enemyData);
                     await UniTask.WaitForSeconds(UnitSpawnDelay, true, PlayerLoopTiming.Update, token);
@@ -103,13 +113,13 @@ namespace Levels.Managers
 
             _currentWave++;
             OnWaveFinished?.Invoke();
-            if(_currentWave >= _levelInfo.Waves.Length)
+            if(_currentWave >= Waves.Length)
                 OnBattleWin?.Invoke();
         }
 
-        private void SpawnEnemy(EnemyData data)
+        private void SpawnEnemy(string id)
         {
-            var enemy = _enemyFabric.Create(Cells[0].WorldPosition, data, this);
+            var enemy = _enemyFabric.Create(Points[0], id, this);
             
             enemy.OnDie += RemoveEnemy;
             enemy.OnDamageMainTower += DamageMainTower;

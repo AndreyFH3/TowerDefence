@@ -6,7 +6,7 @@ using Levels.Managers;
 
 namespace Levels.Spawner
 {
-    public class TowerFabric : PlaceholderFactory<Vector3, TowerData>
+    public class TowerFabric : PlaceholderFactory<TowerModel>
     {
         private DiContainer _container;
         [Inject]

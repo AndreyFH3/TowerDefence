@@ -53,5 +53,10 @@ namespace Game.Core
         {
             _model.LoadBootstrapSceneAsync();
         }
+
+        public void LoadBattleScene()
+        {
+            _model.LoadBattleSceneAsync();
+        }
     }
 }

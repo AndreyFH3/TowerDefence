@@ -13,10 +13,10 @@ namespace Levels.Info
         [SerializeField] private float _speed;
 
         public EnemyType EnemyType =>_enemyType;
-        public string EnemyId=>_enemyId;
+        public string EnemyId =>_enemyId;
         public string EnemyName => _enemyName;
-        public int Health=>_health;
-        public int AttackPower=>_attackPower;
+        public int Health => _health;
+        public int AttackPower =>_attackPower;
         public float Speed =>_speed;
     }
 }

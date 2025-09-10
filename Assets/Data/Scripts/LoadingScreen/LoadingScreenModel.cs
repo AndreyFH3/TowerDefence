@@ -8,7 +8,7 @@ namespace Game.Core
     public class LoadingScreenModel
     {
         private ZenjectSceneLoader _sceneLoader;
-        private enum ScenesNames { MenuScene, BootstrapScene }
+        private enum ScenesNames { MenuScene, BootstrapScene, BattleScene }
     
         public System.Action OnSceneLoadStart;
         public System.Action OnSceneLoadFinish;
@@ -51,6 +51,10 @@ namespace Game.Core
         public void LoadBaseSceneAsync()
         {
             LoadSceneAsync(ScenesNames.MenuScene);
+        }
+        public void LoadBattleSceneAsync()
+        {
+            LoadSceneAsync(ScenesNames.BattleScene);
         }
     }
 }

@@ -1,5 +1,6 @@
 using Core;
 using Game.Core;
+using Levels;
 using PlayerData;
 using UnityEngine;
 using Zenject;
@@ -15,6 +16,7 @@ namespace Installers
             Container.Bind<LoadingScreenModel>().AsSingle().NonLazy();
             Container.Bind<LoadingScreenView>().FromComponentInNewPrefab(_loadingScreenView).AsSingle();
             Container.Bind<LoadingScreenPresenter>().AsSingle().NonLazy();
+            Container.Bind<LevelSceneInfo>().AsSingle().NonLazy();
             #endregion
             Container.Bind<GameIniter>().AsSingle().NonLazy();
 

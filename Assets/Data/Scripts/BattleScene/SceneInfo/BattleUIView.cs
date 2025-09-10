@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Levels.Game
 {
@@ -10,17 +9,21 @@ namespace Levels.Game
         [SerializeField] private TextMeshProUGUI _waveLevelShower;
         [SerializeField] private TextMeshProUGUI _mainTowerHealth;
         [SerializeField] private Button _pauseButton;
+        [SerializeField] private Button _startButton;
 
         public System.Action OnPauseButtonPress;
+        public System.Action OnStartButtonPress;
 
         private void Awake()
         {
             _pauseButton.onClick.AddListener(() => OnPauseButtonPress?.Invoke());
+            _startButton.onClick.AddListener(() => OnStartButtonPress?.Invoke());
         }
 
         private void OnDestroy()
         {
             _pauseButton.onClick.RemoveAllListeners();
+            _startButton.onClick.RemoveAllListeners();
         }
 
         public void SetWaveInfo(string text)
