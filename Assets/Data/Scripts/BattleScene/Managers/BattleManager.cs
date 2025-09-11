@@ -8,6 +8,7 @@ using Levels.Enemies;
 using Levels.Spawner;
 using Levels.Tower;
 using Levels.Info.Tower;
+using Zenject;
 
 namespace Levels.Managers
 {
@@ -30,6 +31,8 @@ namespace Levels.Managers
         public System.Action OnTowerBuild;
         public System.Action OnWaveFinished;
         public System.Action<float> OnMainTowerDamaged;
+
+        public int Health => Mathf.RoundToInt(_mainTower.Health);
         
         public Vector3[] Points => _points.ToArray();
         public Wave[] Waves => _waves.ToArray();
@@ -40,7 +43,7 @@ namespace Levels.Managers
 
         private CancellationTokenSource _cts;
 
-
+        [Inject]
         public void Init(EnemyFabric enemyFabric, TowerFabric towerFabric, MainTowerModel mainTower)
         {
             _enemyFabric = enemyFabric;

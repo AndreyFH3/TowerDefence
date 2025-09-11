@@ -75,6 +75,7 @@ namespace Levels.Enemies
         private void OnTowerAchieve(EnemyModel model)
         {
             _cts.Cancel();
+            Die(model);
         }
     }
 }

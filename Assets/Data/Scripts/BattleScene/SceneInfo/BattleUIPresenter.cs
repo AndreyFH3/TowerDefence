@@ -26,6 +26,8 @@ namespace Levels.Game
             _model.OnMainTowerDamaged += SetHealth;
             _model.OnWaveFinished += SetWaves;
             _view.OnStartButtonPress += StartWave;
+            SetHealth(_model.Health);
+            SetWaves();
         }
 
         private void StartWave()

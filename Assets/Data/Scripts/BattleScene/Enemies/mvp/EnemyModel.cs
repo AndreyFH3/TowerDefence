@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Levels.Info;
 using UnityEngine;
+using Zenject;
 using Zenject.SpaceFighter;
 
 namespace Levels.Enemies
@@ -38,12 +39,14 @@ namespace Levels.Enemies
 
         public System.Action<EnemyModel> OnDie;
         public System.Action<EnemyModel> OnDamageMainTower;        
-        public System.Action<float> OnUnitDamaged;        
+        public System.Action<float> OnUnitDamaged; 
 
+        [Inject]        
         public void Init(EnemyData config, Vector3[] way)
         {
             _currentHealth = config.Health;
             _maxHealth = config.Health;
+            _cells = way;
             Name = config.EnemyName;
             Speed = config.Speed;
             Damage = config.AttackPower;

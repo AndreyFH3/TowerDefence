@@ -335,6 +335,9 @@ MonoBehaviour:
   _battleFieldView_3: {fileID: 7657742550444163053, guid: e32a0d9f6285eed48ae71df16325cf1f, type: 3}
   _mainTowerView: {fileID: 1159881180231325704, guid: a867e4a300305cf4da1d6af16aeb2632, type: 3}
   _battleUIView: {fileID: 799362461}
+  _enemyViewBase: {fileID: 7986010214474473572, guid: e79a8fc753e2d3e42ad88b1ab445d959, type: 3}
+  _enemyViewWater: {fileID: 7986010214474473572, guid: e79a8fc753e2d3e42ad88b1ab445d959, type: 3}
+  _enemyViewFire: {fileID: 7986010214474473572, guid: e79a8fc753e2d3e42ad88b1ab445d959, type: 3}
 --- !u!4 &1452631359
 Transform:
   m_ObjectHideFlags: 0

@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: New Global Config Installer
   m_EditorClassIdentifier: 
   _levelInfoContainer: {fileID: 11400000, guid: 48cdd3e202238b746ba2ebcb9196078f, type: 2}
+  _towerDataContainer: {fileID: 11400000, guid: 9877762e10632f24e8acc4de8ee0ce13, type: 2}
+  _enemyDataContainer: {fileID: 11400000, guid: 9a928fdebd4502640a205e3338e7203f, type: 2}
