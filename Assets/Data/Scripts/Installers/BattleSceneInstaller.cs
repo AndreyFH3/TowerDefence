@@ -9,16 +9,28 @@ using Zenject;
 
 public class BattleSceneInstaller : MonoInstaller
 {
+    [Header("Battle views")]
     [SerializeField] private BattleFieldView _battleFieldView_1;
     [SerializeField] private BattleFieldView _battleFieldView_2;
     [SerializeField] private BattleFieldView _battleFieldView_3;
 
+    [Header("Main Tower")]
     [SerializeField] private MainTowerView _mainTowerView;
     [SerializeField] private BattleUIView _battleUIView;
     
+    [Header("Enemies")]
     [SerializeField] private EnemyView _enemyViewBase; 
     [SerializeField] private EnemyView _enemyViewWater;
     [SerializeField] private EnemyView _enemyViewFire; 
+    
+    [Header("Towers")]
+    [SerializeField] private TowerView _towerViewBase; 
+    [SerializeField] private TowerView _towerViewWater;
+    [SerializeField] private TowerView _towerViewFire;
+
+    [Header("Build Tower")]
+    [SerializeField] private SpotBuildSubView _spotBuildingView;
+    [SerializeField] private SpotBuildingSubUpgradeView _spotBuildingUpgradeView;
 
     public override void InstallBindings()
     {
@@ -43,12 +55,14 @@ public class BattleSceneInstaller : MonoInstaller
         Container.Bind<EnemyView>().WithId(EnemyType.Water.ToString()).FromComponentInNewPrefab(_enemyViewWater).AsTransient();
         Container.Bind<EnemyView>().WithId(EnemyType.Fire.ToString()).FromComponentInNewPrefab(_enemyViewFire).AsTransient();
     
-        Container.Bind<TowerView>().WithId(BulletType.Base.ToString()).AsTransient();
-        Container.Bind<TowerView>().WithId(BulletType.Water.ToString()).AsTransient();
-        Container.Bind<TowerView>().WithId(BulletType.Fire.ToString()).AsTransient();
+        Container.Bind<TowerView>().WithId(BulletType.Base.ToString()).FromComponentInNewPrefab(_towerViewBase).AsTransient();
+        Container.Bind<TowerView>().WithId(BulletType.Water.ToString()).FromComponentInNewPrefab(_towerViewWater).AsTransient();
+        Container.Bind<TowerView>().WithId(BulletType.Fire.ToString()).FromComponentInNewPrefab(_towerViewFire).AsTransient();
 
         Container.Bind<BattleResultPresenter>().AsSingle().NonLazy();
-        Container.Bind<BattleResultView>().FromComponentInHierarchy().AsSingle(); //добавить компонент на сцену
+        Container.Bind<BattleResultView>().FromComponentInHierarchy().AsSingle();
 
+        Container.BindFactory<SpotBuildSubView, SpotBuildSubView.Factory>().FromComponentInNewPrefab(_spotBuildingView).AsSingle();
+        Container.BindFactory<SpotBuildingSubUpgradeView, SpotBuildingSubUpgradeView.Factory>().FromComponentInNewPrefab(_spotBuildingUpgradeView).AsSingle();
     }
 }

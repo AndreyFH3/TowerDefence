@@ -11,15 +11,19 @@ namespace Levels.Game
 		private BattleFieldView _view;
 		private BattleManager _manager;
 		private DiContainer _container;
-		
-		[Inject]
-		public void Init(BattleManager manager, DiContainer container, LevelSceneInfo sceneInfo)
+        private SpotBuildSubView.Factory _subBuildFactory;
+        private SpotBuildingSubUpgradeView.Factory _subBuildUpgradeFactory;
+
+        [Inject]
+		public void Init(BattleManager manager, DiContainer container, LevelSceneInfo sceneInfo, SpotBuildSubView.Factory subBuildFactory, SpotBuildingSubUpgradeView.Factory subBuildUpgradeFactory)
 		{ 
 			_manager = manager;
 			_container = container;
+			_subBuildFactory = subBuildFactory;
+			_subBuildUpgradeFactory = subBuildUpgradeFactory;
 
             CreateBattleFieldView(sceneInfo.LevelId);
-			Subscribe();      
+			InitSpots();      
 		}
 
 		private void CreateBattleFieldView(string id)
@@ -28,15 +32,17 @@ namespace Levels.Game
 				_view = _container.ResolveId<BattleFieldView.BattleFieldViewFabric>(id).Create();
 		}
 
-		private void Subscribe()
+		private void InitSpots()
 		{
 			if(_view != null)
-	            System.Array.ForEach(_view.Spots, el => el.OnClick += SetBuildTowerView);
-		}
-
-		private void SetBuildTowerView(Vector3 position)
-		{
-
+			{
+				foreach (var spotView in _view.Spots)
+				{
+					TowerSpotModel model = new();
+					TowerSpotPresenter spotPresenter = new TowerSpotPresenter();
+					spotPresenter.Init(spotView, model, _subBuildFactory, _subBuildUpgradeFactory);
+				}
+			}
 		}
     }
 }

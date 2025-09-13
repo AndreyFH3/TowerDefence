@@ -12,21 +12,6 @@ namespace Levels.Game
         [SerializeField] private List<TowerSpotView> _spots;
         public TowerSpotView[] Spots => _spots.ToArray();
         
-
-        public void SetTower()
-        {
-
-        }
-
-        public void SetUnit()
-        {
-
-        }
-
-        public void OpenTowerSpot()
-        {
-
-        }
         public class BattleFieldViewFabric : PlaceholderFactory<BattleFieldView>
         {
 
