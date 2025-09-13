@@ -1,0 +1,1 @@
+public enum SpotState { Empty, Set }
