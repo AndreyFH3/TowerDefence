@@ -1,6 +1,7 @@
 using System.Linq;
 using Levels.Info;
 using Levels.Managers;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -24,8 +25,12 @@ namespace Levels.Game
             _model.SetWaves(_levelInfo.Waves);
 
             _model.OnMainTowerDamaged += SetHealth;
-            _model.OnWaveFinished += SetWaves;
+
+            _model.OnWaveStarted += SetWaves;
+            _model.OnWaveFinished += ActiveStartButtonState;
+            
             _view.OnStartButtonPress += StartWave;
+            
             SetHealth(_model.Health);
             SetWaves();
         }
@@ -33,6 +38,16 @@ namespace Levels.Game
         private void StartWave()
         {
             _model.StartWave();
+            DisableStartButtonState();
+        }
+
+        private void ActiveStartButtonState() 
+        {
+            _view.SetStartButtonState(true);
+        }
+        private void DisableStartButtonState() 
+        {
+            _view.SetStartButtonState(false);
         }
 
         private void SetHealth(float value)

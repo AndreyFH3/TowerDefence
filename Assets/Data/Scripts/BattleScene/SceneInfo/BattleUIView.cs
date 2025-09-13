@@ -25,6 +25,10 @@ namespace Levels.Game
             _pauseButton.onClick.RemoveAllListeners();
             _startButton.onClick.RemoveAllListeners();
         }
+        public void SetStartButtonState(bool isEnable) 
+        { 
+            _startButton.gameObject.SetActive(isEnable);
+        }
 
         public void SetWaveInfo(string text)
         {

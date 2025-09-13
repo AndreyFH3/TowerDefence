@@ -26,6 +26,7 @@ namespace Menu.LevelSelect
         public void SetParent(Transform transform)
         {
             transform.SetParent(parent);
+            transform.localScale = Vector3.one;
         }
 
         public void Close()

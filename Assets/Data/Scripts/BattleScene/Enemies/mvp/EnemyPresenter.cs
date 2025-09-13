@@ -23,6 +23,7 @@ namespace Levels.Enemies
             Subscribe();
 
             Update(_cts.Token).Forget();
+            _enemyView.SetHealth(1);
         }
 
         private async UniTask Update(CancellationToken cts)
@@ -53,6 +54,7 @@ namespace Levels.Enemies
         private void Subscribe()
         {
             _enemyModel.OnDie += Die;
+            _enemyModel.OnUnitDamaged += _enemyView.SetHealth;
             _enemyModel.OnDamageMainTower += OnTowerAchieve;
             _enemyView.OnDestroyGameObject += Unsubscribe;
         }
@@ -60,6 +62,7 @@ namespace Levels.Enemies
         public void Unsubscribe()
         {
             _enemyModel.OnDie -= Die;
+            _enemyModel.OnUnitDamaged -= _enemyView.SetHealth;
             _enemyModel.OnDamageMainTower -= OnTowerAchieve;
             _enemyView.OnDestroyGameObject -= Unsubscribe;
         }
@@ -72,10 +75,11 @@ namespace Levels.Enemies
             _enemyView.SetDieAnimation();
         }
 
+        
         private void OnTowerAchieve(EnemyModel model)
         {
-            _cts.Cancel();
-            Die(model);
+            _cts?.Cancel();
+            GameObject.Destroy(_enemyView.gameObject);
         }
     }
 }

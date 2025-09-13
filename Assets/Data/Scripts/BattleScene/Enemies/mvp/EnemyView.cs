@@ -12,6 +12,8 @@ namespace Levels.Enemies
 
         public System.Action OnDestroyGameObject;
 
+        public void SetHealth(float value) => _healthLine.value = value;
+
         public void SetWalkingAnimation()
         {
             _animator.SetTrigger("WALK");

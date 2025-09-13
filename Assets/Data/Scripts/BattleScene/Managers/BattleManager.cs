@@ -29,6 +29,7 @@ namespace Levels.Managers
         public System.Action OnBattleWin;
         public System.Action OnBattleLose;
         public System.Action OnTowerBuild;
+        public System.Action OnWaveStarted;
         public System.Action OnWaveFinished;
         public System.Action<float> OnMainTowerDamaged;
 
@@ -51,6 +52,7 @@ namespace Levels.Managers
             _mainTower = mainTower;
 
             _mainTower.OnDamaged += MainTowerDamaged;
+            _mainTower.OnDie += Lose;
 
             _cts = new();
         }
@@ -69,8 +71,15 @@ namespace Levels.Managers
 
         private void MainTowerDamaged(float value) => OnMainTowerDamaged?.Invoke(value);
 
-        private void Win() => OnBattleWin?.Invoke();
-        private void Lose() => OnBattleLose?.Invoke();
+        private void Win()
+        {
+            if(_currentWave >= Waves.Length)
+                OnBattleWin?.Invoke();
+        }
+        private void Lose() 
+        {
+            OnBattleLose?.Invoke();
+        }
 
         public void StartWave()
         {
@@ -97,6 +106,7 @@ namespace Levels.Managers
         {
             try
             {
+                OnWaveStarted?.Invoke();
                 foreach (var enemyData in Waves[_currentWave].Enemies)
                 {
                     SpawnEnemy(enemyData);
@@ -118,6 +128,7 @@ namespace Levels.Managers
             OnWaveFinished?.Invoke();
             if(_currentWave >= Waves.Length)
                 OnBattleWin?.Invoke();
+            Win();
         }
 
         private void SpawnEnemy(string id)
@@ -125,6 +136,7 @@ namespace Levels.Managers
             var enemy = _enemyFabric.Create(Points[0], id, this);
             
             enemy.OnDie += RemoveEnemy;
+            enemy.OnDamageMainTower += RemoveEnemy;
             enemy.OnDamageMainTower += DamageMainTower;
 
             _enemies.Add(enemy);
@@ -138,6 +150,7 @@ namespace Levels.Managers
         private void RemoveEnemy(EnemyModel enemy)
         {
             enemy.OnDie -= RemoveEnemy;
+            enemy.OnDamageMainTower -= RemoveEnemy;
             enemy.OnDamageMainTower -= DamageMainTower;
 
             _enemies.Remove(enemy);
