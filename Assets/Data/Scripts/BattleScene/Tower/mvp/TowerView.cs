@@ -13,18 +13,19 @@ namespace Levels.Tower
         private void Awake()
         {
             _lineRenderer.gameObject.SetActive(false);
+            _lineRenderer.transform.SetParent(null);
         }
 
         public void SetPosition(Vector3 position)
         {
             transform.position = position;
+            transform.localScale = Vector3.one / 2;
         }
 
         public void Attack(Vector3 target)
         {
             _lineRenderer.gameObject.SetActive(true);
-            _lineRenderer.SetPosition(0, _attackStartPoint.position);
-            _lineRenderer.SetPosition(1, target);
+            _lineRenderer.SetPositions(new[] { _attackStartPoint.position , target});
             DisableLineRenderer(new CancellationTokenSource().Token).Forget();
         }
         private async UniTask DisableLineRenderer(CancellationToken token)

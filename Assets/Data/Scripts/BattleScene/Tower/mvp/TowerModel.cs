@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using Levels.Info.Tower;
-using Levels.Enemies;
+﻿using Levels.Enemies;
 using Levels.Info;
+using Levels.Info.Tower;
+using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Levels.Tower
 {
@@ -10,10 +11,13 @@ namespace Levels.Tower
         private BulletType _bulletType;
         public float AttackDelay {  get; protected set; }
         public float Damage {  get; protected set; }
+        public float Distance {  get; protected set; }
         public int Price { get; protected set; }
         public Sprite Sprite { get; protected set; }
 
         public System.Action OnUpgrade;
+
+        public Vector3 Position { get; protected set; }
 
         public int Level { get; protected set; }
 
@@ -23,6 +27,7 @@ namespace Levels.Tower
             AttackDelay = data.AttackDelay;
             Damage = data.Damage;
             Price = data.Price;
+            Distance = data.Distance;
             Sprite = data.Sprite;
         }
 
@@ -32,9 +37,16 @@ namespace Levels.Tower
             OnUpgrade?.Invoke();
         }
 
-        public void AttackEnemy(EnemyModel enemy)
+        public void SetPosition(Vector3 pos) => Position = pos;
+
+        public bool AttackEnemy(EnemyModel enemy)
         {
-            enemy.GetDamage(Damage, _bulletType);
+            if (Vector3.Distance(enemy.CurrentPosition, Position) <= Distance)
+            {
+                enemy.GetDamage(Damage, _bulletType);
+                return true;
+            }
+            return false;
         }
 
     }

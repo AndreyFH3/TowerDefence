@@ -21,8 +21,8 @@ namespace Levels.Tower
             _view = view;
             _manager = manager;
 
+            _cts = new();
             Update(_cts.Token).Forget();
-            Subscribe();
         }
 
         private async UniTask Update(CancellationToken ct)
@@ -43,10 +43,9 @@ namespace Levels.Tower
 
         private void TryAttack(EnemyModel data)
         {
-            if (data != null)
+            if (data != null && _model.AttackEnemy(data))
             {
-                _view.Attack(data.CurrentPosition);
-                _model.AttackEnemy(data);
+                 _view.Attack(data.CurrentPosition);
             }
         }
 
@@ -54,21 +53,10 @@ namespace Levels.Tower
         {
             return _manager.GetClosestUnit(_view.transform.position);
         }
-
-        private void Subscribe()
-        {
-
-        }
-
-        private void Unsubscribe()
-        {
-
-        }
-
+        
         public void Dispose()
         {
             _cts.Cancel();
-            Unsubscribe();
         }
     }
 }

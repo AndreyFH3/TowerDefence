@@ -21,7 +21,7 @@ namespace Levels.Enemies
 
         public void SetDieAnimation()
         {
-            _animator.SetTrigger("DIE");
+            _animator.SetTrigger("DIE"); Dispose();
         }
 
         public void SetPosition(Vector3 position)

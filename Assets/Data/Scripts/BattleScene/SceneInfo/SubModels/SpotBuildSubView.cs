@@ -15,9 +15,9 @@ public class SpotBuildSubView : MonoBehaviour
 
     private void Awake()
     {
-        _tryBuyBase.onClick.AddListener(() => OnTryBuyBase?.Invoke());
-        _tryBuyFire.onClick.AddListener(() => OnTryBuyFire?.Invoke());
-        _tryBuyWater.onClick.AddListener(() => OnTryBuyWater?.Invoke());
+        _tryBuyBase.onClick.AddListener(() => { OnTryBuyBase?.Invoke(); Close(); });
+        _tryBuyFire.onClick.AddListener(() => { OnTryBuyFire?.Invoke(); Close(); });
+        _tryBuyWater.onClick.AddListener(() => { OnTryBuyWater?.Invoke(); Close(); });
         _close.onClick.AddListener(Close);
     }
 

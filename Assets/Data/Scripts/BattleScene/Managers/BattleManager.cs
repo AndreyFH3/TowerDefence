@@ -97,10 +97,11 @@ namespace Levels.Managers
         }
 
 
-        private void AddTower(Vector3 position, TowerData data)
+        public TowerModel AddTower(Vector3 position, BulletType type)
         {
-            TowerModel tower = _towerFabric.Create(position, data, this);
-            _towers.Add(tower);    
+            TowerModel tower = _towerFabric.Create(position, type, this);
+            _towers.Add(tower);
+            return tower;
         }
 
         private async UniTask CreateWave(CancellationToken token)

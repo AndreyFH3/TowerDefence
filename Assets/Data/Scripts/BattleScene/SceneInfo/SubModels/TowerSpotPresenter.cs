@@ -1,3 +1,4 @@
+using Levels.Info;
 using Levels.Managers;
 using UnityEngine;
 
@@ -7,16 +8,17 @@ namespace Levels.Game.Sub
     {
         private TowerSpotView _view;
         private TowerSpotModel _model;
+
         private SpotBuildSubView.Factory _subBuildFactory;
         private SpotBuildingSubUpgradeView.Factory _subBuildUpgradeFactory;
-
-        public void Init(TowerSpotView view, TowerSpotModel model, SpotBuildSubView.Factory subBuildFactory, SpotBuildingSubUpgradeView.Factory subBuildUpgradeFactory)
+        private BattleManager _manager;   
+        public void Init(TowerSpotView view, TowerSpotModel model, SpotBuildSubView.Factory subBuildFactory, SpotBuildingSubUpgradeView.Factory subBuildUpgradeFactory, BattleManager manager)
         {
             _view = view;
             _model = model;
             _subBuildFactory = subBuildFactory;
             _subBuildUpgradeFactory = subBuildUpgradeFactory;
-
+            _manager = manager;
             Subscribe();
         }
 
@@ -31,16 +33,23 @@ namespace Levels.Game.Sub
             { 
                 var view = _subBuildFactory.Create();
                 view.transform.position = position;
-                view.OnTryBuyBase +=() => Debug.Log("base");
-                view.OnTryBuyWater += () => Debug.Log("water");
-                view.OnTryBuyFire += () => Debug.Log("fire");
+                view.OnTryBuyBase +=() => CreateTower(position, BulletType.Base);
+                view.OnTryBuyWater += () => CreateTower(position, BulletType.Water);
+                view.OnTryBuyFire += () => CreateTower(position, BulletType.Fire);
             }
             else
             {
                 var view = _subBuildUpgradeFactory.Create();
-                view.OnUpgradeButtonClick += () => Debug.Log("upgrade");
-                view.OnSellButtonClick += () => Debug.Log("sell");
+                view.transform.position = position;
+                view.OnUpgradeButtonClick += () => _model.Tower.Upgrade() ;
+                view.OnSellButtonClick += () => _model.RemoveTower();
             }
+        }
+
+        private void CreateTower(Vector3 pos, BulletType type)
+        {
+            var tower = _manager.AddTower(pos, type);
+            _model.SetTower(tower);
         }
     }
 }

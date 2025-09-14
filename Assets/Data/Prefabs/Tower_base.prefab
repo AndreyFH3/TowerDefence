@@ -8,9 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2470204170322250870, guid: 68cec43c014de8d439bcd687740dc6aa, type: 3}
+      propertyPath: m_SortingOrder
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4597845073029758274, guid: 68cec43c014de8d439bcd687740dc6aa, type: 3}
       propertyPath: m_Name
-      value: Tower_prefab_base
+      value: Tower_base
       objectReference: {fileID: 0}
     - target: {fileID: 4954439243347495141, guid: 68cec43c014de8d439bcd687740dc6aa, type: 3}
       propertyPath: m_LocalPosition.x

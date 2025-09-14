@@ -18,49 +18,49 @@ MonoBehaviour:
     - _attackDelay: 1.5
       _damage: 1.5
       _price: 100
-      _distance: 0
+      _distance: 3
       _sprite: {fileID: 0}
     - _attackDelay: 1.25
       _damage: 2
       _price: 125
-      _distance: 0
+      _distance: 3.5
       _sprite: {fileID: 0}
     - _attackDelay: 1
       _damage: 4
       _price: 175
-      _distance: 0
+      _distance: 3.5
       _sprite: {fileID: 0}
   - _type: 1
     towerUpdateNext:
     - _attackDelay: 1.5
       _damage: 1.5
       _price: 100
-      _distance: 0
+      _distance: 3
       _sprite: {fileID: 0}
     - _attackDelay: 1.25
       _damage: 2
       _price: 125
-      _distance: 0
+      _distance: 3.5
       _sprite: {fileID: 0}
     - _attackDelay: 1
       _damage: 4
       _price: 175
-      _distance: 0
+      _distance: 4
       _sprite: {fileID: 0}
   - _type: 2
     towerUpdateNext:
     - _attackDelay: 1.5
       _damage: 1.5
       _price: 100
-      _distance: 0
+      _distance: 3
       _sprite: {fileID: 0}
     - _attackDelay: 1.25
       _damage: 2
       _price: 125
-      _distance: 0
+      _distance: 3.5
       _sprite: {fileID: 0}
     - _attackDelay: 1
       _damage: 4
       _price: 175
-      _distance: 0
+      _distance: 4
       _sprite: {fileID: 0}

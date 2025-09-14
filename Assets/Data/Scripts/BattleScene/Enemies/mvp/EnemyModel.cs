@@ -56,7 +56,7 @@ namespace Levels.Enemies
         {
             var damageValue = value * CalculateMultiplayer(bulletType);
             _currentHealth -= damageValue;
-            OnUnitDamaged?.Invoke(damageValue);
+            OnUnitDamaged?.Invoke(HealthPercents);
             if(_currentHealth <= 0)
             {
                 IsAlive = false;

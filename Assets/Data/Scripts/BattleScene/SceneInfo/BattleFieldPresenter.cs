@@ -40,7 +40,7 @@ namespace Levels.Game
 				{
 					TowerSpotModel model = new();
 					TowerSpotPresenter spotPresenter = new TowerSpotPresenter();
-					spotPresenter.Init(spotView, model, _subBuildFactory, _subBuildUpgradeFactory);
+					spotPresenter.Init(spotView, model, _subBuildFactory, _subBuildUpgradeFactory, _manager);
 				}
 			}
 		}
