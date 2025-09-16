@@ -1,13 +1,14 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
-using Levels.Info;
 using Levels.Enemies;
+using Levels.Info;
+using Levels.SignalBus;
 using Levels.Spawner;
 using Levels.Tower;
-using Levels.Info.Tower;
+using PlayerData;
+using UnityEngine;
 using Zenject;
 
 namespace Levels.Managers
@@ -22,6 +23,11 @@ namespace Levels.Managers
         private EnemyFabric _enemyFabric;
         private TowerFabric _towerFabric;
         private MainTowerModel _mainTower;
+        private string _levelId;
+        private CompanyProgress _progress;
+        private CancellationTokenSource _cts;
+        private Wallet _wallet;
+        private Zenject.SignalBus _signalBus;
 
         private int _currentWave = 0;
 
@@ -34,7 +40,7 @@ namespace Levels.Managers
         public System.Action<float> OnMainTowerDamaged;
 
         public int Health => Mathf.RoundToInt(_mainTower.Health);
-        
+        public Wallet Wallet => _wallet;
         public Vector3[] Points => _points.ToArray();
         public Wave[] Waves => _waves.ToArray();
 
@@ -42,19 +48,34 @@ namespace Levels.Managers
 
         private float UnitSpawnDelay => 1.5f;
 
-        private CancellationTokenSource _cts;
 
         [Inject]
-        public void Init(EnemyFabric enemyFabric, TowerFabric towerFabric, MainTowerModel mainTower)
+        public void Init(EnemyFabric enemyFabric, TowerFabric towerFabric, MainTowerModel mainTower, CompanyProgress progress, LevelSceneInfo sceneInfo, Wallet wallet,  Zenject.SignalBus signalBus)
         {
             _enemyFabric = enemyFabric;
             _towerFabric = towerFabric;
             _mainTower = mainTower;
+            _progress = progress;
+            _levelId = sceneInfo.LevelId;
+            _wallet = wallet;
+            _signalBus = signalBus;
 
             _mainTower.OnDamaged += MainTowerDamaged;
             _mainTower.OnDie += Lose;
 
             _cts = new();
+        }
+
+        public void Pause() 
+        { 
+            Time.timeScale = 0;
+            _signalBus.Fire<PauseBattleSignal>();
+        }
+
+        public void Resume() 
+        {
+            Time.timeScale = 1;
+            _signalBus.Fire<ResumeBattleSignal>();
         }
 
         public void SetWaves(List<Wave> waves)
@@ -73,8 +94,11 @@ namespace Levels.Managers
 
         private void Win()
         {
-            if(_currentWave >= Waves.Length)
-                OnBattleWin?.Invoke();
+            if (_currentWave < Waves.Length)
+                return;
+
+            _progress.SetPassed(_levelId);
+            OnBattleWin?.Invoke();
         }
         private void Lose() 
         {
@@ -100,8 +124,21 @@ namespace Levels.Managers
         public TowerModel AddTower(Vector3 position, BulletType type)
         {
             TowerModel tower = _towerFabric.Create(position, type, this);
-            _towers.Add(tower);
+            if (tower is not null)
+            {
+                _towers.Add(tower);
+                tower.OnSell += RemoveTower;
+            }
             return tower;
+        }
+        
+        private void RemoveTower(TowerModel tower)
+        {
+            if (!_towers.Contains(tower))
+                return;
+            _towers.Remove(tower);
+            tower.OnSell -= RemoveTower;
+
         }
 
         private async UniTask CreateWave(CancellationToken token)
@@ -129,8 +166,7 @@ namespace Levels.Managers
             _currentWave++;
             OnWaveFinished?.Invoke();
             if(_currentWave >= Waves.Length)
-                OnBattleWin?.Invoke();
-            Win();
+                Win();
         }
 
         private void SpawnEnemy(string id)
@@ -151,6 +187,8 @@ namespace Levels.Managers
 
         private void RemoveEnemy(EnemyModel enemy)
         {
+            if (!enemy.IsAlive)
+                _wallet.AddCoins(enemy.KillCost);
             enemy.OnDie -= RemoveEnemy;
             enemy.OnDamageMainTower -= RemoveEnemy;
             enemy.OnDamageMainTower -= DamageMainTower;

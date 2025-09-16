@@ -1,5 +1,6 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 namespace Levels.Tower
 {
@@ -8,6 +9,7 @@ namespace Levels.Tower
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private Transform _attackStartPoint;
+        [SerializeField] private TextMeshProUGUI _levelText;
         [SerializeField] private float _lineRendererShowTime = .25f;
 
         private void Awake()
@@ -34,9 +36,13 @@ namespace Levels.Tower
             _lineRenderer.gameObject.SetActive(false);
         }
 
+        public void SetLevel(int level) => _levelText.text = $"{level}";
+
         public void UpdateSpriteRenderer(Sprite sprite)
         {
             _spriteRenderer.sprite = sprite;
         }
+
+
     }
 }

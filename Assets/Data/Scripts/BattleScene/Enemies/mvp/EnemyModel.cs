@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Levels.Info;
 using UnityEngine;
 using Zenject;
-using Zenject.SpaceFighter;
 
 namespace Levels.Enemies
 {
@@ -32,6 +31,7 @@ namespace Levels.Enemies
         public float Speed { get; protected set; }
         public float Damage { get; protected set; }
         public string Name { get; protected set; }
+        public int KillCost { get; protected set; }
         private EnemyType _enemyType;
 
         public Vector3 CurrentPosition { get; set; }
@@ -50,6 +50,7 @@ namespace Levels.Enemies
             Name = config.EnemyName;
             Speed = config.Speed;
             Damage = config.AttackPower;
+            KillCost = config.KillCost;
         }
 
         public void GetDamage(float value, BulletType bulletType)

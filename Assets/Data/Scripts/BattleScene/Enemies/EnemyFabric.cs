@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Zenject;
 using Levels.Managers;
-using Levels.Info;
 using Levels.Enemies;
 
 namespace Levels.Spawner
@@ -10,9 +9,11 @@ namespace Levels.Spawner
     {
         private DiContainer _container;
         private EnemyDataContainer _enemyDataContainer;
+        private Zenject.SignalBus _signalBus;
         [Inject]
-        public void Init(DiContainer container, EnemyDataContainer enemyDataContainer)
+        public void Init(DiContainer container, EnemyDataContainer enemyDataContainer, Zenject.SignalBus signalBus)
         {
+            _signalBus = signalBus;
             _container = container;
             _enemyDataContainer = enemyDataContainer;
         }
@@ -25,7 +26,7 @@ namespace Levels.Spawner
             EnemyPresenter presenter = new();
 
             model.Init(data, manager.Points);
-            presenter.Init(model, view);
+            presenter.Init(model, view, _signalBus);
             view.SetPosition(spawnPosition);
 
             return model;

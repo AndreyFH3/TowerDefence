@@ -16,18 +16,21 @@ MonoBehaviour:
   - _enemyType: 0
     _enemyId: ENEMY_BASE
     _enemyName: BASED
-    _health: 15
+    _health: 10
     _attackPower: 1
     _speed: 1
+    _killCost: 50
   - _enemyType: 1
     _enemyId: ENEMY_WATER
     _enemyName: WATERED
-    _health: 10
+    _health: 7
     _attackPower: 4
     _speed: 1
+    _killCost: 50
   - _enemyType: 2
     _enemyId: ENEMY_FIRE
     _enemyName: FIRED
-    _health: 10
+    _health: 7
     _attackPower: 5
     _speed: 1
+    _killCost: 50

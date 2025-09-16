@@ -1,9 +1,11 @@
 ﻿using System;
-using UnityEngine;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Levels.Enemies;
 using Levels.Managers;
+using Levels.SignalBus;
+using UnityEngine;
+using Zenject;
 
 namespace Levels.Tower
 {
@@ -12,17 +14,30 @@ namespace Levels.Tower
         private TowerModel _model;
         private TowerView _view;
         private BattleManager _manager;
+        private Zenject.SignalBus _signalBus;
 
         private CancellationTokenSource _cts;
+        private bool _isPaused = false;
 
-        public void Init(TowerModel model, TowerView view, BattleManager manager)
+        public void Init(TowerModel model, TowerView view, BattleManager manager, Zenject.SignalBus signalBus)
         {
             _model = model;
             _view = view;
             _manager = manager;
+            _signalBus = signalBus;
 
+            _signalBus.Subscribe<PauseBattleSignal>(SetPause);
+            _signalBus.Subscribe<ResumeBattleSignal>(Continue);
+            _model.OnUpgrade += OnLevelUpgrade;
+            _model.OnSell += SellTower;
             _cts = new();
             Update(_cts.Token).Forget();
+            OnLevelUpgrade();
+        }
+
+        public void OnLevelUpgrade()
+        {
+            _view.SetLevel(_model.Level);
         }
 
         private async UniTask Update(CancellationToken ct)
@@ -31,6 +46,12 @@ namespace Levels.Tower
             {
                 while (true) 
                 {
+                    if (_isPaused)
+                    {
+                        await UniTask.WaitForSeconds(_model.AttackDelay, true, PlayerLoopTiming.Update, ct);
+                        continue;
+                    }
+
                     TryAttack(GetClosestEnemy());   
                     await UniTask.WaitForSeconds(_model.AttackDelay, true, PlayerLoopTiming.Update, ct);
                 }
@@ -41,6 +62,8 @@ namespace Levels.Tower
             }
         }
 
+        private void SetPause() { _isPaused = true; }
+        private void Continue() { _isPaused = false; }
         private void TryAttack(EnemyModel data)
         {
             if (data != null && _model.AttackEnemy(data))
@@ -53,10 +76,18 @@ namespace Levels.Tower
         {
             return _manager.GetClosestUnit(_view.transform.position);
         }
-        
+        private void SellTower(TowerModel model)
+        {
+            Dispose();
+        }
         public void Dispose()
         {
+            _signalBus.Unsubscribe<PauseBattleSignal>(SetPause);
+            _signalBus.Unsubscribe<ResumeBattleSignal>(Continue);
+            _model.OnUpgrade -= OnLevelUpgrade;
+            _model.OnSell -= SellTower;
             _cts.Cancel();
+            GameObject.Destroy(_view.gameObject);
         }
     }
 }

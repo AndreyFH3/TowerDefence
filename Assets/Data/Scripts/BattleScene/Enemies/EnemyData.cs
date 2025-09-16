@@ -11,6 +11,7 @@ namespace Levels.Info
         [SerializeField] private int _health;
         [SerializeField] private int _attackPower;
         [SerializeField] private float _speed;
+        [SerializeField] private int _killCost = 50;
 
         public EnemyType EnemyType =>_enemyType;
         public string EnemyId =>_enemyId;
@@ -18,5 +19,6 @@ namespace Levels.Info
         public int Health => _health;
         public int AttackPower =>_attackPower;
         public float Speed =>_speed;
+        public int KillCost => _killCost;
     }
 }

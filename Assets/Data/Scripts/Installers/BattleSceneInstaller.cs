@@ -1,7 +1,9 @@
 using Levels.Enemies;
 using Levels.Game;
+using Levels.Game.Sub;
 using Levels.Info;
 using Levels.Managers;
+using Levels.SignalBus;
 using Levels.Spawner;
 using Levels.Tower;
 using UnityEngine;
@@ -34,6 +36,10 @@ public class BattleSceneInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        SignalBusInstaller.Install(Container);
+        Container.DeclareSignal<PauseBattleSignal>();
+        Container.DeclareSignal<ResumeBattleSignal>();
+
         Container.BindFactory<EnemyModel, EnemyFabric>().AsSingle();
         Container.BindFactory<TowerModel, TowerFabric>().AsSingle();
         
@@ -60,9 +66,13 @@ public class BattleSceneInstaller : MonoInstaller
         Container.Bind<TowerView>().WithId(BulletType.Fire.ToString()).FromComponentInNewPrefab(_towerViewFire).AsTransient();
 
         Container.Bind<BattleResultPresenter>().AsSingle().NonLazy();
+        Container.Bind<Wallet>().AsSingle().NonLazy();
         Container.Bind<BattleResultView>().FromComponentInHierarchy().AsSingle();
 
         Container.BindFactory<SpotBuildSubView, SpotBuildSubView.Factory>().FromComponentInNewPrefab(_spotBuildingView).AsSingle();
         Container.BindFactory<SpotBuildingSubUpgradeView, SpotBuildingSubUpgradeView.Factory>().FromComponentInNewPrefab(_spotBuildingUpgradeView).AsSingle();
+
+        Container.Bind<TowerSpotModel>().AsTransient();
+        Container.BindFactory<TowerSpotPresenter, TowerSpotPresenter.Factory>().AsSingle();
     }
 }

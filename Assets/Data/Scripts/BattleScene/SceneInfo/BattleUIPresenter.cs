@@ -12,13 +12,14 @@ namespace Levels.Game
         private BattleUIView _view;
         private BattleManager _model;
         private LevelInfo _levelInfo;
+        private Wallet _wallet;
 
         [Inject]
         public void Init(BattleUIView view, BattleManager model, LevelInfoContainer container, LevelSceneInfo sceneInfo)
         {
             _view = view;
             _model = model;
-
+            _wallet = _model.Wallet;
             _levelInfo = container.GetLevelInfo(sceneInfo.LevelId);
 
             _model.SetPoints(_levelInfo.Points);
@@ -30,9 +31,19 @@ namespace Levels.Game
             _model.OnWaveFinished += ActiveStartButtonState;
             
             _view.OnStartButtonPress += StartWave;
-            
+            _view.OnPauseButtonPress += _model.Pause;
+            _view.OnContinueButtonPress += _model.Resume;
+            _model.Wallet.OnCoinsValueChanged += SetWalletValue;
+
             SetHealth(_model.Health);
             SetWaves();
+            SetWalletValue();
+        }
+        
+
+        private void SetWalletValue()
+        {
+            _view.SetCoins(_wallet.Coins);
         }
 
         private void StartWave()

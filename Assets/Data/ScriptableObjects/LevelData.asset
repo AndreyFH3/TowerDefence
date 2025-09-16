@@ -55,6 +55,7 @@ MonoBehaviour:
     - {x: 2.69997, y: -0.77612996, z: 0}
     - {x: 7.26097, y: -0.77612996, z: 0}
     - {x: 7.26097, y: -0.77612996, z: 0}
+    _coinsDefault: 300
   - _levelId: LEVEL_2
     _sprite: {fileID: 21300000, guid: 819c06c75d56b644eb0d861767fc45ad, type: 3}
     _waves:
@@ -103,6 +104,7 @@ MonoBehaviour:
     - {x: 2.69997, y: -0.77612996, z: 0}
     - {x: 7.26097, y: -0.77612996, z: 0}
     - {x: 7.26097, y: -0.77612996, z: 0}
+    _coinsDefault: 300
   - _levelId: LEVEL_3
     _sprite: {fileID: 21300000, guid: f62ec9542d0389a4ab272b3b31e4083f, type: 3}
     _waves:
@@ -157,3 +159,4 @@ MonoBehaviour:
     - {x: 2.69997, y: -0.77612996, z: 0}
     - {x: 7.26097, y: -0.77612996, z: 0}
     - {x: 7.26097, y: -0.77612996, z: 0}
+    _coinsDefault: 300

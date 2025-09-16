@@ -9,18 +9,16 @@ namespace Levels.Game
 	public class BattleFieldPresenter
 	{
 		private BattleFieldView _view;
-		private BattleManager _manager;
 		private DiContainer _container;
-        private SpotBuildSubView.Factory _subBuildFactory;
-        private SpotBuildingSubUpgradeView.Factory _subBuildUpgradeFactory;
+		private BattleManager _manager;
+		private TowerSpotPresenter.Factory _factory;
 
         [Inject]
-		public void Init(BattleManager manager, DiContainer container, LevelSceneInfo sceneInfo, SpotBuildSubView.Factory subBuildFactory, SpotBuildingSubUpgradeView.Factory subBuildUpgradeFactory)
+		public void Init(DiContainer container, LevelSceneInfo sceneInfo, BattleManager manager, TowerSpotPresenter.Factory factory)
 		{ 
 			_manager = manager;
 			_container = container;
-			_subBuildFactory = subBuildFactory;
-			_subBuildUpgradeFactory = subBuildUpgradeFactory;
+            _factory = factory;
 
             CreateBattleFieldView(sceneInfo.LevelId);
 			InitSpots();      
@@ -38,9 +36,8 @@ namespace Levels.Game
 			{
 				foreach (var spotView in _view.Spots)
 				{
-					TowerSpotModel model = new();
-					TowerSpotPresenter spotPresenter = new TowerSpotPresenter();
-					spotPresenter.Init(spotView, model, _subBuildFactory, _subBuildUpgradeFactory, _manager);
+					TowerSpotPresenter spotPresenter = _factory.Create();
+					spotPresenter.Init(spotView);
 				}
 			}
 		}

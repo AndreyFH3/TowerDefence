@@ -14,53 +14,65 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _towerDatas:
   - _type: 0
+    _buildPrice: 100
     towerUpdateNext:
     - _attackDelay: 1.5
       _damage: 1.5
       _price: 100
+      _sellPrice: 75
       _distance: 3
       _sprite: {fileID: 0}
     - _attackDelay: 1.25
       _damage: 2
       _price: 125
+      _sellPrice: 125
       _distance: 3.5
       _sprite: {fileID: 0}
     - _attackDelay: 1
       _damage: 4
       _price: 175
+      _sellPrice: 225
       _distance: 3.5
       _sprite: {fileID: 0}
   - _type: 1
+    _buildPrice: 100
     towerUpdateNext:
     - _attackDelay: 1.5
       _damage: 1.5
       _price: 100
+      _sellPrice: 75
       _distance: 3
       _sprite: {fileID: 0}
     - _attackDelay: 1.25
       _damage: 2
       _price: 125
+      _sellPrice: 125
       _distance: 3.5
       _sprite: {fileID: 0}
     - _attackDelay: 1
       _damage: 4
       _price: 175
+      _sellPrice: 225
       _distance: 4
       _sprite: {fileID: 0}
   - _type: 2
+    _buildPrice: 100
     towerUpdateNext:
     - _attackDelay: 1.5
       _damage: 1.5
       _price: 100
+      _sellPrice: 75
       _distance: 3
       _sprite: {fileID: 0}
     - _attackDelay: 1.25
       _damage: 2
       _price: 125
+      _sellPrice: 125
       _distance: 3.5
       _sprite: {fileID: 0}
     - _attackDelay: 1
       _damage: 4
       _price: 175
+      _sellPrice: 225
       _distance: 4
       _sprite: {fileID: 0}

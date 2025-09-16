@@ -11,11 +11,13 @@ namespace Levels.Info
         [SerializeField] private Sprite _sprite;
         [SerializeField] private List<Wave> _waves = new();
         [SerializeField] private List<Vector3> _points;
+        [SerializeField] public int _coinsDefault = 100;
 
         public string LevelId => _levelId;
         public Sprite Sprite => _sprite;
         public List<Wave> Waves => _waves;
         public List<Vector3> Points=> _points;
+        public int CoinsDefault => _coinsDefault;
 
         public void SetPoints(Vector3[] points)
         {

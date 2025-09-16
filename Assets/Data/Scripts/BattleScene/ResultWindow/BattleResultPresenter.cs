@@ -2,6 +2,7 @@ using Game.Core;
 using Levels.Managers;
 using Zenject;
 using UnityEngine;
+using Levels.Info;
 
 namespace Levels.Game
 {
@@ -11,13 +12,17 @@ namespace Levels.Game
         private BattleManager _manager;
         private BattleResultView _view;
         private LoadingScreenPresenter _loading;
+        private LevelInfoContainer _levelContainer;
+        private string _levelId;
 
         [Inject]
-        public void Init(BattleManager manger, BattleResultView view, LoadingScreenPresenter loading)
+        public void Init(BattleManager manger, BattleResultView view, LoadingScreenPresenter loading, LevelInfoContainer levelContainer, LevelSceneInfo sceneInfo)
         {
             _manager = manger;
             _view = view;
             _loading = loading;
+            _levelContainer = levelContainer;
+            _levelId = sceneInfo.LevelId;
 
             Subscribe();
             _view.gameObject.SetActive(false);
@@ -33,7 +38,7 @@ namespace Levels.Game
 
         private void NextMission()
         {
-            Debug.Log("Loaded prev level!");
+            _levelContainer.GetLevelInfo(_levelContainer.GetLevelNumber(_levelId) + 1);
             _loading.LoadBattleScene();
         }
 
@@ -51,6 +56,9 @@ namespace Levels.Game
 
         private void SetWin()
         {
+            if (_levelContainer.GetLevelNumber(_levelId) + 1 >= _levelContainer.MaxLevelIndex)
+                _view.DisableNextMissionButton();
+
             _view.gameObject.SetActive(true);
             _view.SetResults(true);
         }

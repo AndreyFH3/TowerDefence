@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks.Triggers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,11 @@ namespace Levels.Game
         public void SetResults(bool isWin)
         {
             _resultText.text = isWin ? "Победа" : "Поражение";
+        }
+
+        public void DisableNextMissionButton()
+        {
+            _next.gameObject.SetActive(false);
         }
     }
 }

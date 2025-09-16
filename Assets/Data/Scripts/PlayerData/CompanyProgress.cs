@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PlayerData
@@ -5,17 +6,20 @@ namespace PlayerData
     [System.Serializable]
     public class CompanyProgress
     {
-        [SerializeField] private int _lastPassed = 0;
+        [SerializeField] private List<string> _passedIds = new();
 
         public System.Action OnPassed;
-        public int LastPassed => _lastPassed;
+        public int LastPassed => _passedIds.Count;
 
-        public void SetPassedLevel()
-        {
-            _lastPassed++;
-            OnPassed?.Invoke();
+        public void SetPassed(string id) 
+        { 
+            if(!CheckPassed(id))
+                _passedIds.Add(id);
         }
 
-        public bool CheckPassedLevel(int value) => _lastPassed <= value;
+        public bool CheckPassed(string id)
+        {
+            return _passedIds.Contains(id);
+        }
     }
 }
