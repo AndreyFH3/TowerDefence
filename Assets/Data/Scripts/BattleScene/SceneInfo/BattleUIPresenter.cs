@@ -32,7 +32,6 @@ namespace Levels.Game
             
             _view.OnStartButtonPress += StartWave;
             _view.OnPauseButtonPress += _model.Pause;
-            _view.OnContinueButtonPress += _model.Resume;
             _model.Wallet.OnCoinsValueChanged += SetWalletValue;
 
             SetHealth(_model.Health);

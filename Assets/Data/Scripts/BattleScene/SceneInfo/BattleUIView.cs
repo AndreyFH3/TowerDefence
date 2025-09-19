@@ -11,20 +11,16 @@ namespace Levels.Game
         [SerializeField] private TextMeshProUGUI _mainTowerHealth;
         [SerializeField] private TextMeshProUGUI _coins;
         [SerializeField] private Button _pauseButton;
-        [SerializeField] private Button _resumeButton;
         [SerializeField] private Button _startButton;
 
-        public System.Action OnContinueButtonPress;
         public System.Action OnPauseButtonPress;
         public System.Action OnStartButtonPress;
 
         private void Awake()
         {
-            _resumeButton.onClick.AddListener(() => { OnContinueButtonPress?.Invoke(); _resumeButton.gameObject.SetActive(false); _pauseButton.gameObject.SetActive(true); });
-            _pauseButton.onClick.AddListener(() => { OnPauseButtonPress?.Invoke(); _resumeButton.gameObject.SetActive(true); _pauseButton.gameObject.SetActive(false); });
+            _pauseButton.onClick.AddListener(() => { OnPauseButtonPress?.Invoke();});
             _startButton.onClick.AddListener(() => OnStartButtonPress?.Invoke());
 
-            _resumeButton.gameObject.SetActive(false);
         }
 
         private void OnDestroy()

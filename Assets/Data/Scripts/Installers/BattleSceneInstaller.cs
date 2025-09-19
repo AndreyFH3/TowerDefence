@@ -74,5 +74,8 @@ public class BattleSceneInstaller : MonoInstaller
 
         Container.Bind<TowerSpotModel>().AsTransient();
         Container.BindFactory<TowerSpotPresenter, TowerSpotPresenter.Factory>().AsSingle();
+
+        Container.Bind<PauseWindowPresenter>().AsSingle().NonLazy();
+        Container.Bind<PauseWindowView>().FromComponentInHierarchy().AsSingle();
     }
 }

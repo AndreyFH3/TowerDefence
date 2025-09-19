@@ -13,7 +13,7 @@ namespace Levels.Game
         private BattleResultView _view;
         private LoadingScreenPresenter _loading;
         private LevelInfoContainer _levelContainer;
-        private string _levelId;
+        private LevelSceneInfo _sceneInfo;
 
         [Inject]
         public void Init(BattleManager manger, BattleResultView view, LoadingScreenPresenter loading, LevelInfoContainer levelContainer, LevelSceneInfo sceneInfo)
@@ -22,7 +22,7 @@ namespace Levels.Game
             _view = view;
             _loading = loading;
             _levelContainer = levelContainer;
-            _levelId = sceneInfo.LevelId;
+            _sceneInfo = sceneInfo;
 
             Subscribe();
             _view.gameObject.SetActive(false);
@@ -38,12 +38,14 @@ namespace Levels.Game
 
         private void NextMission()
         {
-            _levelContainer.GetLevelInfo(_levelContainer.GetLevelNumber(_levelId) + 1);
+            var level = _levelContainer.GetLevelInfo(_levelContainer.GetLevelNumber(_sceneInfo.LevelId) + 1);
+            if(level != null) 
+                _sceneInfo.LevelId = level.LevelId;
             _loading.LoadBattleScene();
         }
 
         private void LoadHome()
-        {
+        { 
             _loading.LoadBaseScene();
         }
 
@@ -56,7 +58,7 @@ namespace Levels.Game
 
         private void SetWin()
         {
-            if (_levelContainer.GetLevelNumber(_levelId) + 1 >= _levelContainer.MaxLevelIndex)
+            if (_levelContainer.GetLevelNumber(_sceneInfo.LevelId) >= _levelContainer.MaxLevelIndex)
                 _view.DisableNextMissionButton();
 
             _view.gameObject.SetActive(true);

@@ -11,15 +11,19 @@ namespace Levels.Info
         public int MaxLevelIndex => _levelsInfo.Count - 1;
         public LevelInfo[] LevelsInfo => _levelsInfo.ToArray();
 
-        public int GetLevelNumber(string id) => _levelsInfo.IndexOf(GetLevelInfo(id));
-
+        public int GetLevelNumber(string id)
+        {
+            var level = _levelsInfo.IndexOf(GetLevelInfo(id));
+            return level;
+        }
         public LevelInfo GetLevelInfo(string id)
         {
-            return _levelsInfo.Find(el => el.LevelId == id);
+            var info = _levelsInfo.Find(el => el.LevelId == id);
+            return info;
         }
         public LevelInfo GetLevelInfo(int id)
         {
-            if (MaxLevelIndex >= id)
+            if (MaxLevelIndex < id)
                 return null;
             return _levelsInfo[id];
         }

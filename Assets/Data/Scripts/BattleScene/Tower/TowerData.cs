@@ -10,7 +10,7 @@ namespace Levels.Info.Tower
         [SerializeField] private int _buildPrice = 100;
         [SerializeField] private List<TowerLevelInfo> towerUpdateNext = null;
         public BulletType Type => _type;
-        public int MaxLevel => towerUpdateNext.Count + 1;
+        public int MaxLevel => towerUpdateNext.Count;
         public int BuildPrice => _buildPrice;
         public TowerLevelInfo GetUpgrade(int index)
         {
