@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core;
 using UnityEngine;
 
 namespace PlayerData
@@ -12,9 +13,12 @@ namespace PlayerData
         public int LastPassed => _passedIds.Count;
 
         public void SetPassed(string id) 
-        { 
-            if(!CheckPassed(id))
+        {
+            if (!CheckPassed(id))
+            {
                 _passedIds.Add(id);
+                new SaveSystem().Save(this, "COMPANY_PROGRESS");
+            }
         }
 
         public bool CheckPassed(string id)

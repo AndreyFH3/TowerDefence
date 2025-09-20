@@ -1,7 +1,6 @@
 using Game.Core;
 using Levels;
 using Levels.Info;
-using UnityEngine;
 using Zenject;
 
 namespace Menu.LevelSelect

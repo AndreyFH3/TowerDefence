@@ -29,6 +29,11 @@ namespace Menu.LevelSelect
             levelIcon.sprite = info.Sprite;
         }
 
+        public void DisableClick()
+        {
+            levelButton.interactable = false;
+        }
+
         private void OnButtonClick()
         {
             OnClick?.Invoke();
