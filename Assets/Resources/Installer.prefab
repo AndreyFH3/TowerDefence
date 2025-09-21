@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _loadingScreenView: {fileID: 4650075362153878288, guid: 1e189b8a6e7bac2469c345d605cc3e80, type: 3}
+  _soundControllerPrefab: {fileID: 8232700667850606301, guid: 7b0746511862bbc43b5ab093ebee4aae, type: 3}

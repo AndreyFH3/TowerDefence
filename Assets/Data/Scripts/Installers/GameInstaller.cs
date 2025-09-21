@@ -10,6 +10,7 @@ namespace Installers
     public class GameInstaller : MonoInstaller
     {
         [SerializeField] private LoadingScreenView _loadingScreenView;
+        [SerializeField] private SoundController _soundControllerPrefab;
         public override void InstallBindings()
         {
             #region LoadingScreen
@@ -26,6 +27,20 @@ namespace Installers
             var progress = saveSystem.Get<CompanyProgress>("COMPANY_PROGRESS") ?? new CompanyProgress();
             Container.Bind<CompanyProgress>().FromInstance(progress).AsSingle();
             #endregion
+            SignalBusInstaller.Install(Container);
+
+            Container.DeclareSignal<PlaySfxSignal>();
+            Container.DeclareSignal<PlayMusicSignal>();
+
+            Container.Bind<SoundModel>().AsSingle();
+
+            Container.Bind<SoundController>()
+                .FromComponentInNewPrefab(_soundControllerPrefab)
+                .AsSingle()
+                .NonLazy();
+
+            Container.BindInterfacesAndSelfTo<SoundPresenter>().AsSingle().NonLazy();
+
         }
     }
 }
