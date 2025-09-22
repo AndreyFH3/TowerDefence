@@ -12,7 +12,7 @@ public class SoundContainer : ScriptableObject
     public SoundEntry[] _sfxSounds;
     public SoundEntry[] _music;
 
-    public AudioClip GetFsx(string id)
+    public AudioClip GetSfx(string id)
     {
         foreach (var s in _sfxSounds)
             if (s.Id == id)

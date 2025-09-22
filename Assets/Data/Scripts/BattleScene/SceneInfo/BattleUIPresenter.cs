@@ -1,6 +1,8 @@
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Levels.Info;
 using Levels.Managers;
+using Sounds;
 using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
@@ -13,13 +15,15 @@ namespace Levels.Game
         private BattleManager _model;
         private LevelInfo _levelInfo;
         private Wallet _wallet;
+        private SoundPlayer _soundPlayer;
 
         [Inject]
-        public void Init(BattleUIView view, BattleManager model, LevelInfoContainer container, LevelSceneInfo sceneInfo)
+        public void Init(BattleUIView view, BattleManager model, LevelInfoContainer container, LevelSceneInfo sceneInfo, SoundPlayer soundPlayer)
         {
             _view = view;
             _model = model;
             _wallet = _model.Wallet;
+            _soundPlayer = soundPlayer;
             _levelInfo = container.GetLevelInfo(sceneInfo.LevelId);
 
             _model.SetPoints(_levelInfo.Points);
@@ -31,7 +35,7 @@ namespace Levels.Game
             _model.OnWaveFinished += ActiveStartButtonState;
             
             _view.OnStartButtonPress += StartWave;
-            _view.OnPauseButtonPress += _model.Pause;
+            _view.OnPauseButtonPress += SetPause;
             _model.Wallet.OnCoinsValueChanged += SetWalletValue;
 
             SetHealth(_model.Health);
@@ -39,6 +43,11 @@ namespace Levels.Game
             SetWalletValue();
         }
         
+        private void SetPause()
+        {
+            _model.Pause();
+            _soundPlayer.PlayClickSound();
+        }
 
         private void SetWalletValue()
         {
@@ -48,6 +57,7 @@ namespace Levels.Game
         private void StartWave()
         {
             _model.StartWave();
+            _soundPlayer.PlayClickSound();
             DisableStartButtonState();
         }
 

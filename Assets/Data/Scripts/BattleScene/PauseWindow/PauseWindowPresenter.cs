@@ -1,6 +1,7 @@
 using Game.Core;
 using Levels.Managers;
 using Levels.SignalBus;
+using Sounds;
 using Zenject;
 
 namespace Levels.Game
@@ -11,13 +12,16 @@ namespace Levels.Game
         private PauseWindowView _view;
         private Zenject.SignalBus _signalBus;
         private LoadingScreenPresenter _loadingScreen;
+        private SoundPlayer _soundPlayer;
+
         [Inject]
-        public void Init(BattleManager manager, PauseWindowView view, Zenject.SignalBus signalBus, LoadingScreenPresenter loadingScreen)
+        public void Init(BattleManager manager, PauseWindowView view, Zenject.SignalBus signalBus, LoadingScreenPresenter loadingScreen, SoundPlayer soundPlayer)
         {
             _manager = manager;
             _view = view;
             _signalBus = signalBus;
             _loadingScreen = loadingScreen;
+            _soundPlayer = soundPlayer;
 
             Subscribe();
             _view.gameObject.SetActive(false);
@@ -39,17 +43,18 @@ namespace Levels.Game
 
         private void GoHome()
         {
+            _soundPlayer.PlayClickSound();
             _loadingScreen.LoadBaseScene();
         }
 
         private void Resume()
         {
+            _soundPlayer.PlayClickSound();
             _manager.Resume();
         }
 
         private void Unsubscribe()
         {
-
             _view.OnResumeButtonClick -= Resume;
             _view.OnHomeButtonClick -= GoHome;
             _view.OnDestroyObject -= Unsubscribe;

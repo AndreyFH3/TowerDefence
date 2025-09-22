@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Levels.Info;
 using Levels.SignalBus;
+using Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -13,15 +14,17 @@ namespace Levels.Enemies
         private EnemyModel _enemyModel;
         private EnemyView _enemyView;
         private Zenject.SignalBus _signalBus;
+        private SoundPlayer _soundPlayer;
         private CancellationTokenSource _cts;
 
         private bool _isPaused = false;
         
-        public void Init(EnemyModel model, EnemyView view, Zenject.SignalBus signalBus)
+        public void Init(EnemyModel model, EnemyView view, Zenject.SignalBus signalBus, SoundPlayer soundPlayer)
         {
             _enemyModel = model;
             _enemyView = view;
             _signalBus = signalBus;
+            _soundPlayer = soundPlayer;
 
             _cts = new();
             Subscribe();
@@ -88,7 +91,8 @@ namespace Levels.Enemies
         {
             if (_enemyModel.IsAlive)
                 return;
-            
+
+            _soundPlayer.PlayEnemyDieSound();
             _enemyView.SetDieAnimation();
         }
 

@@ -2,6 +2,7 @@ using Core;
 using Game.Core;
 using Levels;
 using PlayerData;
+using Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -40,6 +41,7 @@ namespace Installers
                 .NonLazy();
 
             Container.BindInterfacesAndSelfTo<SoundPresenter>().AsSingle().NonLazy();
+            Container.Bind<SoundPlayer>().AsSingle().NonLazy();
 
         }
     }

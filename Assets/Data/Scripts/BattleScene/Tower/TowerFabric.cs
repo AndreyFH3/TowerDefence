@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-using Levels.Tower;
-using Zenject;
+﻿using Levels.Info;
 using Levels.Info.Tower;
 using Levels.Managers;
-using Levels.Info;
+using Levels.Tower;
+using Sounds;
+using UnityEngine;
+using Zenject;
 
 namespace Levels.Spawner
 {
@@ -28,10 +29,11 @@ namespace Levels.Spawner
             TowerModel model = new TowerModel();
             TowerView view = _container.ResolveId<TowerView>(type.ToString());
             TowerPresenter presenter = new();
+            SoundPlayer soundPlayer = _container.Resolve<SoundPlayer>();
 
             model.Init(data.GetUpgrade(0), data.Type, _data);
             model.SetPosition(spawnPosition);
-            presenter.Init(model, view, manager, _signalBus);
+            presenter.Init(model, view, manager, _signalBus, soundPlayer);
             view.SetPosition(spawnPosition);
 
             return model;

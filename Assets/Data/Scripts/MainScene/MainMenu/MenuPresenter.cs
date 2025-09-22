@@ -16,7 +16,6 @@ namespace Menu
 
             _view.OnContinueAction += _model.Continue;
             _view.OnChooseLevelAction += _model.OpenLevelSelect;
-            _view.OnOpenSettingsAction += _model.OpenSettings;
             _view.OnExitAction += _model.ExitGame;
         }
 
@@ -24,7 +23,6 @@ namespace Menu
         {
             _view.OnContinueAction -= _model.Continue;
             _view.OnChooseLevelAction -= _model.OpenLevelSelect;
-            _view.OnOpenSettingsAction -= _model.OpenSettings;
             _view.OnExitAction -= _model.ExitGame;
 
             _view = null;

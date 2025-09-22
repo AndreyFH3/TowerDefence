@@ -1,4 +1,5 @@
 using PlayerData;
+using Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -12,15 +13,17 @@ namespace Menu.LevelSelect
         private LevelSelectionView _view;
         private LevelSelectionModel _model;
         private CompanyProgress _progress;
+        private SoundPlayer _soundPlayer;
 
 
         [Inject]
-        public void Init(LevelSelectionModel model, LevelSelectionView.Factory viewFactory, LevelSelectLevelInfo.Factory viewInfoFactory, CompanyProgress progress)
+        public void Init(LevelSelectionModel model, LevelSelectionView.Factory viewFactory, LevelSelectLevelInfo.Factory viewInfoFactory, CompanyProgress progress, SoundPlayer soundPlayer)
         {
             _model = model;
             _viewFactory = viewFactory;
             _viewInfoFactory = viewInfoFactory;
             _progress = progress;
+            _soundPlayer = soundPlayer;
         }
 
         private void CreateLevelsInfo()
@@ -33,7 +36,7 @@ namespace Menu.LevelSelect
                 if (i > _progress.LastPassed)
                     instance.DisableClick();
                 instance.SetData(info);
-                instance.OnClick += () => { OnLevelSelect(info.LevelId); };
+                instance.OnClick += () => { OnLevelSelect(info.LevelId); _soundPlayer.PlayClickSound(); };
                 _view.SetParent(instance.transform);
             }
         }
@@ -46,6 +49,7 @@ namespace Menu.LevelSelect
         public void CreateWindow()
         {
             _view = _viewFactory.Create();
+            _view.OnClose += _soundPlayer.PlayClickSound;
             CreateLevelsInfo();
         }
 

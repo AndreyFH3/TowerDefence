@@ -17,7 +17,7 @@ public class SoundController : MonoBehaviour
         {
             var src = Instantiate(_sfxPrefab, transform);
             src.playOnAwake = false;
-            src.gameObject.SetActive(false);
+            src.gameObject.SetActive(true);
             _pool.Enqueue(src);
         }
     }

@@ -12,12 +12,14 @@ namespace Installers
         [SerializeField] private LevelInfoContainer _levelInfoContainer;
         [SerializeField] private TowerDataContainer _towerDataContainer;
         [SerializeField] private EnemyDataContainer _enemyDataContainer;
+        [SerializeField] private SoundContainer _soundContainer;
 
         public override void InstallBindings()
         {
             Container.BindInstance(_levelInfoContainer).AsSingle();
             Container.BindInstance(_towerDataContainer).AsSingle();
             Container.BindInstance(_enemyDataContainer).AsSingle();
+            Container.BindInstance(_soundContainer).AsSingle();
         }
     }
 }

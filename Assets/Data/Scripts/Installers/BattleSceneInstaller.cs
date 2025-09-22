@@ -36,7 +36,6 @@ public class BattleSceneInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        SignalBusInstaller.Install(Container);
         Container.DeclareSignal<PauseBattleSignal>();
         Container.DeclareSignal<ResumeBattleSignal>();
 

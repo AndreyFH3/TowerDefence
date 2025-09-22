@@ -12,4 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a3ac3b89ee3564086e006868ea9034, type: 3}
   m_Name: SoundData
   m_EditorClassIdentifier: 
-  Sounds: []
+  _sfxSounds:
+  - Id: ENEMY_DIE
+    Clip: {fileID: 8300000, guid: 02c8d51ac3aa6144c8bb0b7cb9fc7d40, type: 3}
+  - Id: GAME_LOSE
+    Clip: {fileID: 8300000, guid: 42aae24a1862b1d47aca0c60a2776918, type: 3}
+  - Id: GAME_WIN
+    Clip: {fileID: 8300000, guid: ec4ce4b008a6bcc4691e54a1c99561e7, type: 3}
+  - Id: TOWER_SHOOT
+    Clip: {fileID: 8300000, guid: 6109180ec71248f40af049e882c88f47, type: 3}
+  - Id: CLICK
+    Clip: {fileID: 8300000, guid: 6ac6bd43b0e9fc14296797bfeac8a5a9, type: 3}
+  _music:
+  - Id: MAIN_SCENE
+    Clip: {fileID: 8300000, guid: f052ef7fab834c046ae27d9cfb103f77, type: 3}
+  - Id: BATTLE_MUSIC
+    Clip: {fileID: 8300000, guid: cb722ba8e3b82bf479fcfd57de2d4367, type: 3}

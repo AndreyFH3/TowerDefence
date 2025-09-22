@@ -2,6 +2,7 @@
 using Zenject;
 using Levels.Managers;
 using Levels.Enemies;
+using Sounds;
 
 namespace Levels.Spawner
 {
@@ -25,8 +26,9 @@ namespace Levels.Spawner
             EnemyView view = _container.ResolveId<EnemyView>(data.EnemyType.ToString());
             EnemyPresenter presenter = new();
 
+            SoundPlayer soundPlayer = _container.Resolve<SoundPlayer>();
             model.Init(data, manager.Points);
-            presenter.Init(model, view, _signalBus);
+            presenter.Init(model, view, _signalBus, soundPlayer);
             view.SetPosition(spawnPosition);
 
             return model;

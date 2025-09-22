@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Levels.Enemies;
 using Levels.Managers;
 using Levels.SignalBus;
+using Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -14,22 +15,26 @@ namespace Levels.Tower
         private TowerModel _model;
         private TowerView _view;
         private BattleManager _manager;
+        private SoundPlayer _soundPlayer;
         private Zenject.SignalBus _signalBus;
 
         private CancellationTokenSource _cts;
         private bool _isPaused = false;
 
-        public void Init(TowerModel model, TowerView view, BattleManager manager, Zenject.SignalBus signalBus)
+        public void Init(TowerModel model, TowerView view, BattleManager manager, Zenject.SignalBus signalBus, SoundPlayer soundPlayer)
         {
             _model = model;
             _view = view;
             _manager = manager;
             _signalBus = signalBus;
+            _soundPlayer = soundPlayer;
 
             _signalBus.Subscribe<PauseBattleSignal>(SetPause);
             _signalBus.Subscribe<ResumeBattleSignal>(Continue);
             _model.OnUpgrade += OnLevelUpgrade;
             _model.OnSell += SellTower;
+            _view.OnDestroyObject += Dispose;
+
             _cts = new();
             Update(_cts.Token).Forget();
             OnLevelUpgrade();
@@ -52,7 +57,7 @@ namespace Levels.Tower
                         continue;
                     }
 
-                    TryAttack(GetClosestEnemy());   
+                    TryAttack(GetClosestEnemy());
                     await UniTask.WaitForSeconds(_model.AttackDelay, true, PlayerLoopTiming.Update, ct);
                 }
             }
@@ -68,7 +73,8 @@ namespace Levels.Tower
         {
             if (data != null && _model.AttackEnemy(data))
             {
-                 _view.Attack(data.CurrentPosition);
+                _soundPlayer.PlayTowerShootSound();
+                _view.Attack(data.CurrentPosition);
             }
         }
 
@@ -86,6 +92,7 @@ namespace Levels.Tower
             _signalBus.Unsubscribe<ResumeBattleSignal>(Continue);
             _model.OnUpgrade -= OnLevelUpgrade;
             _model.OnSell -= SellTower;
+            _view.OnDestroyObject -= Dispose;
             _cts.Cancel();
             GameObject.Destroy(_view.gameObject);
         }

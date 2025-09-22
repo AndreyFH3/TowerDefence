@@ -22,6 +22,8 @@ namespace Levels.Game
         public void SetResults(bool isWin)
         {
             _resultText.text = isWin ? "Победа" : "Поражение";
+            if(!isWin)
+                DisableNextMissionButton();
         }
 
         public void DisableNextMissionButton()

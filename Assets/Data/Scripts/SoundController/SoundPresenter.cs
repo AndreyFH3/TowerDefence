@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class SoundPresenter : IInitializable, ILateDisposable
+public class SoundPresenter
 {
     private readonly SoundModel _model;
     private readonly SoundController _view;
@@ -12,20 +12,17 @@ public class SoundPresenter : IInitializable, ILateDisposable
         _model = model;
         _view = view;
         _signalBus = signalBus;
+
+        Init();
     }
 
-    public void Initialize()
+    public void Init()
     {
         _view.Init();
         _signalBus.Subscribe<PlaySfxSignal>(Handle);
         _signalBus.Subscribe<PlayMusicSignal>(Handle);
     }
 
-    public void LateDispose()
-    {
-        _signalBus.Unsubscribe<PlaySfxSignal>(Handle);
-        _signalBus.Unsubscribe<PlayMusicSignal>(Handle);
-    }
 
     public void Handle(PlaySfxSignal signal)
     {

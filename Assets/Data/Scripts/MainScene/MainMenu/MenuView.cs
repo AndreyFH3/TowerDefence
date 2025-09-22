@@ -7,19 +7,16 @@ namespace Menu
     {
         [SerializeField] private Button continueButton;
         [SerializeField] private Button chooseLevelButton;
-        [SerializeField] private Button settingsButton;
         [SerializeField] private Button exitButton;
 
         public System.Action OnContinueAction;
         public System.Action OnChooseLevelAction;
-        public System.Action OnOpenSettingsAction;
         public System.Action OnExitAction;
 
         private void Awake()
         {
             continueButton.onClick.AddListener(ContinueAction);
             chooseLevelButton.onClick.AddListener(ChooseLevelAction);
-            settingsButton.onClick.AddListener(OpenSettingsAction);
             exitButton.onClick.AddListener(ExitAction);
         }
 
@@ -27,7 +24,6 @@ namespace Menu
         {
             continueButton.onClick.RemoveListener(ContinueAction);
             chooseLevelButton.onClick.RemoveListener(ChooseLevelAction);
-            settingsButton.onClick.RemoveListener(OpenSettingsAction);
             exitButton.onClick.RemoveListener(ExitAction);
         }
     
@@ -39,11 +35,6 @@ namespace Menu
         private void ChooseLevelAction()
         {
             OnChooseLevelAction?.Invoke();
-        }
-        
-        private void OpenSettingsAction()
-        {
-            OnOpenSettingsAction?.Invoke();
         }
         
         private void ExitAction()

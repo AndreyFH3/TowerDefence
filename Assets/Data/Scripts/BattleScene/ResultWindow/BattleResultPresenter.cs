@@ -3,6 +3,7 @@ using Levels.Managers;
 using Zenject;
 using UnityEngine;
 using Levels.Info;
+using Sounds;
 
 namespace Levels.Game
 {
@@ -14,15 +15,17 @@ namespace Levels.Game
         private LoadingScreenPresenter _loading;
         private LevelInfoContainer _levelContainer;
         private LevelSceneInfo _sceneInfo;
+        private SoundPlayer _soundPlayer;
 
         [Inject]
-        public void Init(BattleManager manger, BattleResultView view, LoadingScreenPresenter loading, LevelInfoContainer levelContainer, LevelSceneInfo sceneInfo)
+        public void Init(BattleManager manger, BattleResultView view, LoadingScreenPresenter loading, LevelInfoContainer levelContainer, LevelSceneInfo sceneInfo, SoundPlayer soundPlayer)
         {
             _manager = manger;
             _view = view;
             _loading = loading;
             _levelContainer = levelContainer;
             _sceneInfo = sceneInfo;
+            _soundPlayer = soundPlayer;
 
             Subscribe();
             _view.gameObject.SetActive(false);
@@ -42,22 +45,26 @@ namespace Levels.Game
             if(level != null) 
                 _sceneInfo.LevelId = level.LevelId;
             _loading.LoadBattleScene();
+            _soundPlayer.PlayClickSound();
         }
 
         private void LoadHome()
         { 
+            _soundPlayer.PlayClickSound();
             _loading.LoadBaseScene();
         }
 
 
         private void SetLose()
         {
+            _soundPlayer.PlayLoseSound();
             _view.gameObject.SetActive(true);
             _view.SetResults(false);
         }
 
         private void SetWin()
         {
+            _soundPlayer.PlayWinSound();
             if (_levelContainer.GetLevelNumber(_sceneInfo.LevelId) >= _levelContainer.MaxLevelIndex)
                 _view.DisableNextMissionButton();
 

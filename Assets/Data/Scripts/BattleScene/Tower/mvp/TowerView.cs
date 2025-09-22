@@ -12,10 +12,17 @@ namespace Levels.Tower
         [SerializeField] private TextMeshProUGUI _levelText;
         [SerializeField] private float _lineRendererShowTime = .25f;
 
+        public System.Action OnDestroyObject;
+
         private void Awake()
         {
             _lineRenderer.gameObject.SetActive(false);
             _lineRenderer.transform.SetParent(null);
+        }
+
+        private void OnDestroy()
+        {
+            OnDestroyObject?.Invoke();    
         }
 
         public void SetPosition(Vector3 position)
