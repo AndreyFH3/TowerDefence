@@ -21,7 +21,7 @@ namespace Levels.Managers
         private List<Wave> _waves;
 
         private EnemyFabric _enemyFabric;
-        private TowerFabric _towerFabric;
+        private TowerFactory _towerFabric;
         private MainTowerModel _mainTower;
         private string _levelId;
         private CompanyProgress _progress;
@@ -50,7 +50,7 @@ namespace Levels.Managers
 
 
         [Inject]
-        public void Init(EnemyFabric enemyFabric, TowerFabric towerFabric, MainTowerModel mainTower, CompanyProgress progress, LevelSceneInfo sceneInfo, Wallet wallet,  Zenject.SignalBus signalBus)
+        public void Init(EnemyFabric enemyFabric, TowerFactory towerFabric, MainTowerModel mainTower, CompanyProgress progress, LevelSceneInfo sceneInfo, Wallet wallet,  Zenject.SignalBus signalBus)
         {
             _enemyFabric = enemyFabric;
             _towerFabric = towerFabric;

@@ -6,7 +6,7 @@ using Sounds;
 
 namespace Levels.Spawner
 {
-    public class EnemyFabric : PlaceholderFactory<EnemyModel>
+    public class EnemyFabric : IFactory<Vector3, string, BattleManager, EnemyModel>
     {
         private DiContainer _container;
         private EnemyDataContainer _enemyDataContainer;
@@ -22,9 +22,9 @@ namespace Levels.Spawner
         public EnemyModel Create(Vector3 spawnPosition, string id, BattleManager manager)
         {
             var data = _enemyDataContainer.GetEnemyData(id);
-            EnemyModel model = new EnemyModel();
+            EnemyModel model = _container.Instantiate<EnemyModel>();
             EnemyView view = _container.ResolveId<EnemyView>(data.EnemyType.ToString());
-            EnemyPresenter presenter = new();
+            EnemyPresenter presenter = _container.Instantiate<EnemyPresenter>();
 
             SoundPlayer soundPlayer = _container.Resolve<SoundPlayer>();
             model.Init(data, manager.Points);

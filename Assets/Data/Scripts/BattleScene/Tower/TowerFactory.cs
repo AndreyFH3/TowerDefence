@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Levels.Spawner
 {
-    public class TowerFabric : PlaceholderFactory<TowerModel>
+    public class TowerFactory : IFactory<Vector3, BulletType, BattleManager, TowerModel>
     {
         private DiContainer _container;
         private TowerDataContainer _data;
@@ -26,14 +26,16 @@ namespace Levels.Spawner
         {
             var data = _data.GetTowerData(type);
 
-            TowerModel model = new TowerModel();
+            TowerModel model = _container.Instantiate<TowerModel>();
             TowerView view = _container.ResolveId<TowerView>(type.ToString());
-            TowerPresenter presenter = new();
+            TowerPresenter presenter = _container.Instantiate<TowerPresenter>();
             SoundPlayer soundPlayer = _container.Resolve<SoundPlayer>();
 
             model.Init(data.GetUpgrade(0), data.Type, _data);
             model.SetPosition(spawnPosition);
-            presenter.Init(model, view, manager, _signalBus, soundPlayer);
+            
+            presenter.Init(model,view,manager,_signalBus,soundPlayer);
+            
             view.SetPosition(spawnPosition);
 
             return model;

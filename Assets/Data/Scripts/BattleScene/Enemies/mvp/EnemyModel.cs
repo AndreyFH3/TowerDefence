@@ -41,7 +41,6 @@ namespace Levels.Enemies
         public System.Action<EnemyModel> OnDamageMainTower;        
         public System.Action<float> OnUnitDamaged; 
 
-        [Inject]        
         public void Init(EnemyData config, Vector3[] way)
         {
             _currentHealth = config.Health;

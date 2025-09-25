@@ -39,9 +39,11 @@ public class BattleSceneInstaller : MonoInstaller
         Container.DeclareSignal<PauseBattleSignal>();
         Container.DeclareSignal<ResumeBattleSignal>();
 
-        Container.BindFactory<EnemyModel, EnemyFabric>().AsSingle();
-        Container.BindFactory<TowerModel, TowerFabric>().AsSingle();
-        
+        Container.Bind<EnemyFabric>()
+            .AsSingle();
+        Container.Bind<TowerFactory>()
+            .AsSingle();
+
         Container.Bind<BattleManager>().AsSingle().NonLazy();
 
         Container.BindFactory<BattleFieldView, BattleFieldView.BattleFieldViewFabric>().WithId("LEVEL_1").FromComponentInNewPrefab(_battleFieldView_1).AsCached();
